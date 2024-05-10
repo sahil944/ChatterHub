@@ -3,7 +3,7 @@ import ScrollableFeed from 'react-scrollable-feed';
 import { isDiffDate, isLastMessage, isSameSender, isSameSenderMargin, isSameUser } from '../Config/ChatLogics';
 import { ChatState } from '../Context/ChatProvider';
 import { Avatar, Tooltip } from '@chakra-ui/react';
-import dateFormat, { masks } from "dateformat";
+import dateFormat from "dateformat";
 import { Badge } from '@chakra-ui/react'
 
 const ScrollableChat = ({messages}) => {

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { ChatState } from '../Context/ChatProvider';
-import { Box, Button, Stack, Text, useToast } from '@chakra-ui/react';
+import { Avatar, Box, Button, Stack, Text, useToast } from '@chakra-ui/react';
 import axios from 'axios';
 import { AddIcon } from '@chakra-ui/icons';
 import ChatLoading from './ChatLoading';
 import AddGroupChatModal from './miscellaneous/AddGroupChatModal';
+import { getSender, getSenderFullDetails } from '../Config/ChatLogics';
+import dateFormat from "dateformat";
 
 const MyChats = ({fetchAgain}) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -89,12 +91,57 @@ const MyChats = ({fetchAgain}) => {
                 cursor="pointer"
                 paddingX={3}
                 paddingY={2}
-                background={selectedChat === chat? "#38B2AC": "#E8E8E8"}
+                background={selectedChat === chat? "#75a19f": "#E8E8E8"}
                 color={selectedChat === chat? "white": "black"}
                 borderRadius="lg"
+                // width="100%"
+                display="flex"
+                // alignItems="center"
+                // marginBottom={2}
                 key={chat._id}
               >
-                <Text>{chat.chatName}</Text>
+                
+                <Avatar
+                  marginRight={2}
+                  size="sm"
+                  cursor="pointer"
+                  name={chat.isGroupChat ? chat.chatName : getSender(user, chat.users)}
+                  src={chat.isGroupChat ? './../images/groups-icon-15.png' : getSenderFullDetails(user, chat.users).pic} />
+
+
+                <Box
+                  display="flex"
+                  flexDir="column"
+                >
+
+                  <Text>
+                    <span>
+                      {chat.isGroupChat ? chat.chatName : getSender(user, chat.users)}
+                    </span>
+                    <span
+                      style={{
+                                    paddingLeft: '30px',
+                                    // paddingRight: '0',
+                                    // marginRight: '0',
+                                    // paddingBottom: '0px',
+                                    fontSize: '11px',
+                                    // justifyContent: 'right',
+                                    // display: 'flex'
+                                    // margin: '5px 0px 0px 5px',
+                            }}
+                    >
+                      {dateFormat(chat.latestMessage.createdAt, "h:MM TT")}
+                    </span>
+                  </Text>
+
+                  <Text
+                    display="flex"
+                    fontSize="xs"
+                  >
+                    <span>{chat.isGroupChat ? (chat.latestMessage.sender._id === user._id ? '~You:' : `~${chat.latestMessage.sender.name}:`): ''}</span>
+                    <Text paddingLeft={1}>{chat.latestMessage.content}</Text>
+                  </Text>
+                </Box>
               </Box>
             ))}
           </Stack>
