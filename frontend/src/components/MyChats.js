@@ -130,7 +130,7 @@ const MyChats = ({fetchAgain}) => {
                                     // margin: '5px 0px 0px 5px',
                             }}
                     >
-                      {dateFormat(chat.latestMessage.createdAt, "h:MM TT")}
+                      {dateFormat(chat?.latestMessage?.createdAt, "h:MM TT")}
                     </span>
                   </Text>
 
@@ -138,8 +138,8 @@ const MyChats = ({fetchAgain}) => {
                     display="flex"
                     fontSize="xs"
                   >
-                    <span>{chat.isGroupChat ? (chat.latestMessage.sender._id === user._id ? '~You:' : `~${chat.latestMessage.sender.name}:`): ''}</span>
-                    <Text paddingLeft={1}>{chat.latestMessage.content}</Text>
+                    <span>{chat.isGroupChat ? (chat?.latestMessage.sender._id === user._id ? '~You:' : `~${chat?.latestMessage?.sender.name}:`): ''}</span>
+                    <Text paddingLeft={1}>{chat?.latestMessage?.content}</Text>
                   </Text>
                 </Box>
               </Box>
